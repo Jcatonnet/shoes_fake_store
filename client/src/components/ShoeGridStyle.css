@@ -1,0 +1,41 @@
+.shoe-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.shoe-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: left;
+
+}
+
+.shoe-image {
+    width: 100%;
+    height: 50%;
+    object-fit: cover;
+    height: auto;
+}
+
+.shoe-details {
+    padding: 10px;
+}
+.shoe-details h3 {
+    text-align: center;
+}
+
+.shoe-price {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.shoe-sizes {
+    margin-top: auto;
+    text-align: left;
+}
