@@ -50,7 +50,6 @@
 
 .sizes-and-stock {
     display: flex;
-    justify-content: space-between;
     align-items: center;
 }
 
@@ -59,16 +58,12 @@
     text-align: left;
 }
 
-.in-stock {
-    margin: 0;
-    font-weight: bold;
-    color: green
-}
-
-.not-available {
-    margin: 0;
-    font-weight: bold;
-    color: red
+#size-select {
+    margin-top: 10px;
+    margin-left: 10px;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
 }
 
 .add-to-cart-button {
