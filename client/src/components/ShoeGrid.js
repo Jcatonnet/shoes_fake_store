@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getShoes } from '../services/shoeService';
 import "./ShoeGridStyle.css";
 
-export const ShoeGrid = () => {
+export const ShoeGrid = ({ onShoeClick }    ) => {
     const [shoes, setShoes] = useState([]);
 
     useEffect(() => {
@@ -17,7 +17,7 @@ export const ShoeGrid = () => {
     return (
         <div className="shoe-grid">
             {shoes.map(shoe => (
-                <div key={shoe.id} className="shoe-card">
+                <div key={shoe.id} className="shoe-card" onClick={() => onShoeClick(shoe)}>
                     <img src={shoe.product_picture} alt={shoe.product_name} className="shoe-image" />
                     <div className="shoe-details">
                         <h3>{shoe.product_name}</h3>
