@@ -23,6 +23,7 @@ export const ShoeModal = ({ shoe, onClose, onAddToCart }) => {
         if (selectedSize) {
             onAddToCart(shoe, selectedSize);
             onClose();
+            alert("Item added to your cart !")
         } else {
             alert("Please select a size");
         }

@@ -30,6 +30,7 @@ export const ShoeGrid = ({ onShoeClick, onAddToCart}) => {
         const size = selectedSizes[shoe.id];
         if (size) {
             onAddToCart(shoe, size);
+            alert("Item added to your cart")
         } else {
             alert("Please select a size");
         }

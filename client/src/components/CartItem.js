@@ -1,5 +1,6 @@
 import React from 'react';
 import './CartItemStyle.css';
+import { Button } from '@mui/material';
 
 export const CartItem = ({ item, handleRemoveItem }) => {
     console.log("items", item)
@@ -12,7 +13,7 @@ export const CartItem = ({ item, handleRemoveItem }) => {
                 <p className="cart-item-quantity">x{item.quantity}</p>
             </div>
                 <p>${item.product_price}</p>
-                <button onClick={() => handleRemoveItem(item.id, item.selectedSize)}>Remove</button>
+                <Button color='error' onClick={() => handleRemoveItem(item.id, item.selectedSize)}>Remove</Button>
             </div>
         </div>
     );

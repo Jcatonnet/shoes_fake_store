@@ -1,6 +1,7 @@
 import React from 'react';
 import './CartStyle.css';
 import { CartItem } from './CartItem';
+import { Button } from '@mui/material';
 
 export const Cart = ({ isOpen, onClose, cartItems, handleRemoveItem, onPay }) => {
     if (!isOpen) {
@@ -21,7 +22,7 @@ export const Cart = ({ isOpen, onClose, cartItems, handleRemoveItem, onPay }) =>
             {cartItems.map(item => (
                 <CartItem key={item.id + item.selectedSize} item={item} handleRemoveItem={handleRemoveItem}></CartItem>
             ))}
-            <button className="pay-button" onClick={onPay}>Pay</button>
+            <Button className="pay-button" variant="contained" color="success">Pay</Button>
         </div>
     );
 };
