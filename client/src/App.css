@@ -7,10 +7,23 @@
   min-height: 60px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  padding: 10px;
+}
+
+.title-container {
+  align-self: center;
+  width: 100%;
+}
+
+.cart-button-container {
+  display: flex;
+  justify-content: flex-end; 
+  width: 100%;
+  padding-right: 10px;
 }
 
 main {
