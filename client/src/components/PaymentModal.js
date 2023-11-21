@@ -48,7 +48,7 @@ export const PaymentModal = ({ isOpen, onClose, userProfileData, onProceedPaymen
                     margin="normal"
                 />
                 <Box display="flex" justifyContent="center" mt={2}>
-                    <Button variant='contained' color="success" onClick={onProceedPayment}>Proceed payment</Button>
+                    <Button variant='contained' color="success" disabled={!creditCardNumber} onClick={onProceedPayment}>Proceed payment</Button>
                 </Box>
             </Box>
         </Modal>

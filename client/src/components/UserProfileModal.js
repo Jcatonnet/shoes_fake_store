@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, TextField, Button, Box } from '@mui/material';
+import { Modal, TextField, Button, Box, Typography } from '@mui/material';
+import { fetchUserInventory } from '../services/inventoryService';
+import { jwtDecode } from 'jwt-decode';
 
 
 const style = {
@@ -15,10 +17,17 @@ const style = {
 
 export const UserProfileModal = ({ isOpen, onClose, onSave, initialUserData }) => {
     const [userData, setUserData] = useState(initialUserData);
+    const [inventory, setInventory] = useState([]);
+
+    console.log(inventory)
+    const token = localStorage.getItem('token');
+    const decodedToken = jwtDecode(token);
+    const userId = decodedToken.userId; 
 
     useEffect(() => {
         if (isOpen) {
             setUserData(initialUserData);
+            fetchUserInventory(userId, setInventory)
         }
     }, [isOpen, initialUserData]);
 
@@ -64,7 +73,16 @@ export const UserProfileModal = ({ isOpen, onClose, onSave, initialUserData }) =
                     />
                 <Box display="flex" justifyContent="center" mt={2}>
                     <Button variant='contained' color="success" onClick={() => onSave(userData)}>Save</Button>
-                </Box>
+            </Box>
+            <Box mt={2}>
+                <Typography variant="h6">Your Inventory:</Typography>
+                {inventory.map((item, index) => (
+                    <Box key={index} mt={1}>
+                        <Typography>Product: {item.productsize.product.product_name}, Quantity: {item.quantity}, Price: {item.productsize.product.product_price} </Typography>
+                    </Box>
+                ))}
+            </Box>
+
             </Box>
         </Modal>
     );

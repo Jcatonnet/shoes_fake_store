@@ -26,6 +26,7 @@ model productsize {
   quantity   Int
   productid  Int
   product    products @relation(fields: [productid], references: [id])
+  inventories   inventory[]
 }
 
 model user {
@@ -35,5 +36,16 @@ model user {
     user_email    String   @unique
     user_password String
     user_address  String
+    inventories   inventory[]
 }
+
+model inventory {
+  id            Int         @id @default(autoincrement())
+  userid        String      
+  productsizeid Int
+  quantity      Int
+  user          user        @relation(fields: [userid], references: [id])
+  productsize   productsize @relation(fields: [productsizeid], references: [id])
+}
+
 

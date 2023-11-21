@@ -7,10 +7,12 @@ import './App.css';
 import { SignupModal } from './components/SignupModal.js';
 import { Signinform } from './components/Signinform';
 import { useEffect } from 'react';
+import {jwtDecode} from 'jwt-decode';
 import { loginUser, getUserProfile, updateUserProfile } from './services/userService';
 import { UserProfileModal } from './components/UserProfileModal';
 import {PaymentModal} from './components/PaymentModal';
 import { updateShoeStock } from './services/shoeService';
+import { addUserInventoryItems } from './services/inventoryService';
 import { Button, Typography, Toolbar, AppBar, Box} from '@mui/material';
 
 const App = () => {
@@ -117,6 +119,9 @@ const handleRemoveItem = (itemId, size) => {
 
 
 const handlePay = async () => {
+    const token = localStorage.getItem('token');
+    const decodedToken = jwtDecode(token);
+    const userId = decodedToken.userId; 
     const purchasedItems = cartItems.map(item => {
         const sizeEntry = item.product_sizes.find(size => size.size === parseInt(item.selectedSize));
         return {
@@ -127,9 +132,16 @@ const handlePay = async () => {
 
     try {
         await updateShoeStock(purchasedItems);
+        const inventoryItems = purchasedItems.map(item => ({
+            productSizeId: item.id,
+            quantity: item.quantitySold
+        }));
+        console.log("reached here")
+
+        await addUserInventoryItems(userId, inventoryItems);
         setCartItems([]);
         setIsPaymentModalOpen(false);
-        alert("Great ! Purchase successful")
+        alert("Great ! Purchase successful, items were added to your inventory")
     } catch (error) {
         console.error('Error updating stock:', error);
     }

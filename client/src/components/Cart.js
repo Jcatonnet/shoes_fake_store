@@ -7,7 +7,6 @@ export const Cart = ({ isOpen, onClose, cartItems, handleRemoveItem, onPay }) =>
     if (!isOpen) {
         return null;
     }
-console.log(cartItems)
     const totalCartAmount = cartItems.reduce((total, item) => {
         return total + (item.product_price * item.quantity);
     }, 0);
