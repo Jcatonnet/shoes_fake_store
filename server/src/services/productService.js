@@ -13,3 +13,16 @@ export async function getAllProducts() {
         throw error;
     }
 }
+
+export async function updateProductStock(purchasedItems) {
+  const transactions = purchasedItems.map(item => {
+      return prisma.productsize.update({
+          where: { id: item.id },
+          data: {
+              quantity: { decrement: item.quantitySold }
+          }
+      });
+  });
+
+  await prisma.$transaction(transactions);
+}

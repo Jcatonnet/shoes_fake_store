@@ -7,7 +7,7 @@ export const Cart = ({ isOpen, onClose, cartItems, handleRemoveItem, onPay }) =>
     if (!isOpen) {
         return null;
     }
-
+console.log(cartItems)
     const totalCartAmount = cartItems.reduce((total, item) => {
         return total + (item.product_price * item.quantity);
     }, 0);
@@ -22,7 +22,7 @@ export const Cart = ({ isOpen, onClose, cartItems, handleRemoveItem, onPay }) =>
             {cartItems.map(item => (
                 <CartItem key={item.id + item.selectedSize} item={item} handleRemoveItem={handleRemoveItem}></CartItem>
             ))}
-            <Button className="pay-button" variant="contained" color="success">Pay</Button>
+            <Button className="pay-button" variant="contained" color="success" disabled={!cartItems.length} onClick={onPay}>Pay</Button>
         </Box>
     );
 };

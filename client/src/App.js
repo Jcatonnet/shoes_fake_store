@@ -9,6 +9,8 @@ import { Signinform } from './components/Signinform';
 import { useEffect } from 'react';
 import { loginUser, getUserProfile, updateUserProfile } from './services/userService';
 import { UserProfileModal } from './components/UserProfileModal';
+import {PaymentModal} from './components/PaymentModal';
+import { updateShoeStock } from './services/shoeService';
 import { Button, Typography, Toolbar, AppBar, Box} from '@mui/material';
 
 const App = () => {
@@ -21,6 +23,8 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const [isUserProfileOpen, setIsUserProfileOpen] = useState(false);
+
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -76,6 +80,14 @@ const handleCloseUserProfile = () => {
     setIsUserProfileOpen(false);
 };
 
+const handleOpenPaymentModal = () => {
+    setIsPaymentModalOpen(true);
+};
+
+const handleClosePaymentModal = () => {
+    setIsPaymentModalOpen(false);
+};
+
   const handleShoeClick = (shoe) => {
     setSelectedShoe(shoe);
 };
@@ -104,10 +116,24 @@ const handleRemoveItem = (itemId, size) => {
 };
 
 
-const handlePay = () => {
-    // Logic for payment
-};
+const handlePay = async () => {
+    const purchasedItems = cartItems.map(item => {
+        const sizeEntry = item.product_sizes.find(size => size.size === parseInt(item.selectedSize));
+        return {
+            id: sizeEntry.id,
+            quantitySold: item.quantity
+        };
+    });
 
+    try {
+        await updateShoeStock(purchasedItems);
+        setCartItems([]);
+        setIsPaymentModalOpen(false);
+        alert("Great ! Purchase successful")
+    } catch (error) {
+        console.error('Error updating stock:', error);
+    }
+};
 const handleAddToCart = (shoe, size) => {
     setCartItems(prevItems => {
         const existingItem = prevItems.find(item => item.id === shoe.id && item.selectedSize === size);
@@ -163,14 +189,20 @@ const handleCloseModal = () => {
                             onClose={handleCloseUserProfile} 
                             onSave={handleSaveUserProfile}
                             initialUserData={userProfileData}
-                        /> 
+                        />
+                        <PaymentModal
+                            isOpen={isPaymentModalOpen}
+                            onClose={handleClosePaymentModal}
+                            userProfileData={userProfileData}
+                            onProceedPayment={handlePay}
+                        />
                         <Cart
                             isOpen={isCartOpen} 
                             onClose={handleCloseCart}
                             cartItems={cartItems}
                             handleRemoveItem={handleRemoveItem}
-                            onPay={handlePay}
-                        />          
+                            onPay={handleOpenPaymentModal}
+                            />          
                     </>
                 }
 
