@@ -27,3 +27,13 @@ model productsize {
   productid  Int
   product    products @relation(fields: [productid], references: [id])
 }
+
+model user {
+    id       String   @id @default(uuid())
+    user_name     String
+    user_surname  String
+    user_email    String   @unique
+    user_password String
+    user_address  String
+}
+

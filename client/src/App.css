@@ -1,5 +1,8 @@
 .App {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .App-header {
@@ -28,6 +31,12 @@
 
 main {
   padding: 20px;
+  flex-grow: 1;
+}
+
+.signin-form{
+  max-width: 30%;
+  margin:auto
 }
 
 .App-footer {

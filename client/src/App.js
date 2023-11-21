@@ -4,11 +4,40 @@ import { ShoeModal } from './components/ShoeModal';
 import { Cart } from './components/Cart';
 import { useState } from 'react';
 import './App.css';
+import { SignupModal } from './components/SignupModal.js';
+import { Signinform } from './components/Signinform';
+import { useEffect } from 'react';
+import { loginUser } from './services/userService';
 
 const App = () => {
   const [selectedShoe, setSelectedShoe] = useState(null);
   const [isCartOpen, setCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+
+  const [isSignupOpen, setIsSignupOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
+const handleLogin = async (loginData) => {
+    try {
+      const response = await loginUser(loginData);
+      if (response.token) {
+        localStorage.setItem('token', response.token);
+        setIsAuthenticated(true);
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+    }
+  };
+
+  const handleOpenSignup = () => setIsSignupOpen(true);
+  const handleCloseSignup = () => setIsSignupOpen(false);
 
   const handleShoeClick = (shoe) => {
     setSelectedShoe(shoe);
@@ -73,8 +102,25 @@ const handleCloseModal = () => {
                 </div>
             </header>
             <main>
-             <ShoeGrid onShoeClick={handleShoeClick} onAddToCart={handleAddToCart} />
-             {selectedShoe && <ShoeModal shoe={selectedShoe} onClose={handleCloseModal} onAddToCart={handleAddToCart} />}
+                {!isAuthenticated ? 
+                <div className='signin-form'>     
+                    <Signinform 
+                        open={!isAuthenticated} 
+                        handleLogin={handleLogin} 
+                        handleOpenSignup={handleOpenSignup}/> 
+                    <SignupModal 
+                    open={isSignupOpen} 
+                    handleClose={handleCloseSignup}
+                    handleLogin={handleLogin}
+                    />
+                </div>
+                    :
+                    <>
+                    <ShoeGrid onShoeClick={handleShoeClick} onAddToCart={handleAddToCart} />
+                    {selectedShoe && <ShoeModal shoe={selectedShoe} onClose={handleCloseModal} onAddToCart={handleAddToCart} />}
+                    </>
+                }
+
             </main>
             <Cart 
                 isOpen={isCartOpen}

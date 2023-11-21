@@ -3,7 +3,6 @@ import './CartItemStyle.css';
 import { Button } from '@mui/material';
 
 export const CartItem = ({ item, handleRemoveItem }) => {
-    console.log("items", item)
     return (
         <div className="cart-item">
             <img src={item.product_picture} alt={item.product_name} className="cart-item-image" />
