@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getShoes } from '../services/shoeService';
 import "./ShoeGridStyle.css";
-import { Button, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel } from "@mui/material";
+import { Button, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel, Box } from "@mui/material";
 
 export const ShoeGrid = ({ onShoeClick, onAddToCart}) => {
     const [shoes, setShoes] = useState([]);
@@ -68,6 +68,8 @@ export const ShoeGrid = ({ onShoeClick, onAddToCart}) => {
                                 ))}
                             </RadioGroup>
                         </FormControl>
+                        <Box display="flex" justifyContent="center" mt={2}>
+
                         <Button 
                             color="success" 
                             variant='contained' 
@@ -75,6 +77,7 @@ export const ShoeGrid = ({ onShoeClick, onAddToCart}) => {
                         >
                             Add to cart
                         </Button>
+                        </Box>
                     </div>
                 </div>
             ))}

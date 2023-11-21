@@ -7,22 +7,50 @@ import './App.css';
 import { SignupModal } from './components/SignupModal.js';
 import { Signinform } from './components/Signinform';
 import { useEffect } from 'react';
-import { loginUser } from './services/userService';
+import { loginUser, getUserProfile, updateUserProfile } from './services/userService';
+import { UserProfileModal } from './components/UserProfileModal';
+import { Button, Typography,Container, Toolbar, AppBar, Box} from '@mui/material';
 
 const App = () => {
   const [selectedShoe, setSelectedShoe] = useState(null);
   const [isCartOpen, setCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+  const [userProfileData, setUserProfileData] = useState({ user_name: '', user_surname:'', user_email: '', user_address: '' });
 
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const [isUserProfileOpen, setIsUserProfileOpen] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       setIsAuthenticated(true);
     }
-  }, []);
+    if (isAuthenticated) {
+        fetchUserProfileData();
+    }
+  }, [isAuthenticated]);
+
+  const fetchUserProfileData = async () => {
+    try {
+        const data = await getUserProfile();
+        setUserProfileData(data);
+    } catch (error) {
+        console.error('Error fetching user data:', error);
+    }
+};
+
+const handleSaveUserProfile = async (updatedData) => {
+    try {
+        await updateUserProfile(updatedData);
+        setUserProfileData(updatedData);
+        handleCloseUserProfile();
+        alert('Profile successfully updated !')
+    } catch (error) {
+        console.error('Error updating user data:', error);
+    }
+};
 
 const handleLogin = async (loginData) => {
     try {
@@ -33,11 +61,20 @@ const handleLogin = async (loginData) => {
       }
     } catch (error) {
       console.error('Login error:', error);
+      alert('Invalid email or password')
     }
   };
 
   const handleOpenSignup = () => setIsSignupOpen(true);
   const handleCloseSignup = () => setIsSignupOpen(false);
+
+  const handleOpenUserProfile = () => {
+    setIsUserProfileOpen(true);
+};
+
+const handleCloseUserProfile = () => {
+    setIsUserProfileOpen(false);
+};
 
   const handleShoeClick = (shoe) => {
     setSelectedShoe(shoe);
@@ -93,14 +130,17 @@ const handleCloseModal = () => {
 
     return (
         <div className="App">
-            <header className="App-header">
-                <div className="title-container">
-                    <h1>Welcome to the Online Shoe Shop</h1>
-                </div>
-                <div className="cart-button-container">
-                    <button onClick={handleOpenCart}>Cart</button>
-                </div>
-            </header>
+            <AppBar sx={{ backgroundColor: '#282c34', position: "static", zIndex: "100" }}  >
+                <Toolbar>
+                    <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
+                        Amazing shoe store
+                    </Typography>
+                    <Box>
+                        {isAuthenticated && <Button color="inherit" onClick={handleOpenCart}>Cart</Button>}
+                        {isAuthenticated && <Button color="inherit" onClick={handleOpenUserProfile}>Profile</Button>}
+                    </Box>
+                </Toolbar>
+            </AppBar>
             <main>
                 {!isAuthenticated ? 
                 <div className='signin-form'>     
@@ -109,30 +149,37 @@ const handleCloseModal = () => {
                         handleLogin={handleLogin} 
                         handleOpenSignup={handleOpenSignup}/> 
                     <SignupModal 
-                    open={isSignupOpen} 
-                    handleClose={handleCloseSignup}
-                    handleLogin={handleLogin}
+                        open={isSignupOpen} 
+                        handleClose={handleCloseSignup}
+                        handleLogin={handleLogin}
                     />
                 </div>
                     :
                     <>
-                    <ShoeGrid onShoeClick={handleShoeClick} onAddToCart={handleAddToCart} />
-                    {selectedShoe && <ShoeModal shoe={selectedShoe} onClose={handleCloseModal} onAddToCart={handleAddToCart} />}
+                        <ShoeGrid onShoeClick={handleShoeClick} onAddToCart={handleAddToCart} />
+                        {selectedShoe && <ShoeModal shoe={selectedShoe} onClose={handleCloseModal} onAddToCart={handleAddToCart} />}
+                        <UserProfileModal 
+                            isOpen={isUserProfileOpen} 
+                            onClose={handleCloseUserProfile} 
+                            onSave={handleSaveUserProfile}
+                            initialUserData={userProfileData}
+                        /> 
+                        <Cart
+                            isOpen={isCartOpen} 
+                            onClose={handleCloseCart}
+                            cartItems={cartItems}
+                            handleRemoveItem={handleRemoveItem}
+                            onPay={handlePay}
+                        />          
                     </>
                 }
 
             </main>
-            <Cart 
-                isOpen={isCartOpen}
-                onClose={handleCloseCart}
-                cartItems={cartItems}
-                handleRemoveItem={handleRemoveItem}
-                onPay={handlePay}
-            />
+
             <footer className="App-footer">
-                <p>© 2023 Online Shoe Shop</p>
+                <p>Julien test ! Thanks team !</p>
             </footer>
-        </div>
+            </div>
     );
 };
 

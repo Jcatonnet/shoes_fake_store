@@ -38,5 +38,44 @@ const loginUser = async (loginData) => {
         throw error;
     }
 };
+const getUserProfile = async () => {
+    const response = await fetch('/api/users/profile', {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json'
+        },
+    });
 
-export { registerUser, loginUser };
+    if (!response.ok) {
+        throw new Error('Failed to fetch user profile');
+    }
+
+    return response.json();
+};
+
+
+const updateUserProfile = async (userData) => {
+    try {
+        const response = await fetch('/api/users/updateProfile', {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to update user profile');
+        }
+
+        const updatedData = await response.json();
+        return updatedData;
+    } catch (error) {
+        console.error('Error updating user profile:', error);
+        throw error;
+    }
+};
+
+export { registerUser, loginUser, getUserProfile, updateUserProfile };

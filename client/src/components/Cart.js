@@ -1,7 +1,7 @@
 import React from 'react';
 import './CartStyle.css';
 import { CartItem } from './CartItem';
-import { Button } from '@mui/material';
+import { Button, Box } from '@mui/material';
 
 export const Cart = ({ isOpen, onClose, cartItems, handleRemoveItem, onPay }) => {
     if (!isOpen) {
@@ -13,17 +13,17 @@ export const Cart = ({ isOpen, onClose, cartItems, handleRemoveItem, onPay }) =>
     }, 0);
 
     return (
-        <div className={`cart-drawer ${isOpen ? 'open' : ''}`}>
+        <Box className={`cart-drawer ${isOpen ? 'open' : ''}`}>
             <button className="close-cart" onClick={onClose}>X</button>
             <h2>Your cart</h2>
-            <div className="cart-total">
+            <Box className="cart-total">
                 Total: ${totalCartAmount.toFixed(2)}
-            </div>
+            </Box>
             {cartItems.map(item => (
                 <CartItem key={item.id + item.selectedSize} item={item} handleRemoveItem={handleRemoveItem}></CartItem>
             ))}
             <Button className="pay-button" variant="contained" color="success">Pay</Button>
-        </div>
+        </Box>
     );
 };
 

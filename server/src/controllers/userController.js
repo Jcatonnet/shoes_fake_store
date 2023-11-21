@@ -30,3 +30,25 @@ export const loginUser = async (req, res) => {
         res.status(500).send('Server Error');
     }
 };
+
+export const getUserProfile = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const userProfile = await userService.getUserProfile(userId);
+        res.json(userProfile);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server Error');
+    }
+};
+
+export const updateUserProfile = async (req, res) => {
+    const userId = req.user.id;
+    try {
+        const updatedUser = await userService.updateUserProfile(userId, req.body);
+        res.json(updatedUser);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server Error');
+    }
+};

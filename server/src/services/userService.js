@@ -34,3 +34,34 @@ export const validateUser = async (email, password) => {
     return null;
 };
 
+export const getUserProfile = async (userId) => {
+    const userProfile = await prisma.user.findUnique({
+        where: { id: userId },
+        select: {
+            user_name: true,
+            user_surname: true,
+            user_email: true,
+            user_address: true
+        }
+    });
+    return userProfile;
+};
+
+export const updateUserProfile = async (userId, userData) => {
+    const updatedUser = await prisma.user.update({
+        where: { id: userId },
+        data: {
+            user_name: userData.user_name,
+            user_surname: userData.user_surname,
+            user_email: userData.user_email,
+            user_address: userData.user_address,
+        },
+        select: {
+            user_name: true,
+            user_surname: true,
+            user_email: true,
+            user_address: true,
+        }
+    });
+    return updatedUser;
+};
