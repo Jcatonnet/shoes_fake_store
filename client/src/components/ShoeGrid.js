@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getShoes } from '../services/shoeService';
 import "./ShoeGridStyle.css";
-import { Button, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel, Box } from "@mui/material";
+import { Button, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel, Box, Typography } from "@mui/material";
 
 export const ShoeGrid = ({ onShoeClick, onAddToCart}) => {
     const [shoes, setShoes] = useState([]);
@@ -37,16 +37,16 @@ export const ShoeGrid = ({ onShoeClick, onAddToCart}) => {
     };
 
     return (
-        <div className="shoe-grid">
+        <Box className="shoe-grid">
             {shoes.map(shoe => (
-                <div key={shoe.id} className="shoe-card" onClick={() => onShoeClick(shoe)}>
+                <Box key={shoe.id} className="shoe-card" onClick={() => onShoeClick(shoe)}>
                     <img src={shoe.product_picture} alt={shoe.product_name} className="shoe-image" />
-                    <div className="shoe-details">
+                    <Box className="shoe-details">
                         <h3>{shoe.product_name}</h3>
-                        <div className="card-item-info">
-                            <p className="shoe-price">${shoe.product_price}</p>
-                            <p className="card-item-quantity">{isShoeInStock(shoe.product_sizes) ? 'In Stock' : 'Not Available'}</p>
-                        </div>
+                        <Box className="card-item-info">
+                            <Typography sx={{ fontWeight: 'bold' }}>${shoe.product_price}</Typography>
+                            <Typography >{isShoeInStock(shoe.product_sizes) ? 'In Stock' : 'Not Available'}</Typography>
+                        </Box>
                         <FormControl component="fieldset">
                             <FormLabel component="legend">Sizes: </FormLabel>
                             <RadioGroup
@@ -78,9 +78,9 @@ export const ShoeGrid = ({ onShoeClick, onAddToCart}) => {
                             Add to cart
                         </Button>
                         </Box>
-                    </div>
-                </div>
+                    </Box>
+                </Box>
             ))}
-        </div>
+        </Box>
     );
 };

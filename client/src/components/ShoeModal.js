@@ -1,7 +1,7 @@
 import React from 'react';
 import './ShoeModalStyle.css';
 import { useState, useEffect } from 'react';
-import { Button } from '@mui/material';
+import { Button, Box, Typography} from '@mui/material';
 
 export const ShoeModal = ({ shoe, onClose, onAddToCart }) => {
     const [selectedSize, setSelectedSize] = useState('');
@@ -31,13 +31,13 @@ export const ShoeModal = ({ shoe, onClose, onAddToCart }) => {
 
 
     return (
-        <div className="shoe-modal-backdrop">
-            <div className="shoe-modal">
+        <Box className="shoe-modal-backdrop">
+            <Box className="shoe-modal">
                 <button className="close-button" onClick={onClose}>X</button>
                 <img src={shoe.product_picture} alt={shoe.product_name} className="shoe-image" />
                 <h3>{shoe.product_name}</h3>
-                <div className="sizes-and-stock">
-                    <label htmlFor="size-select" >Choose a size:</label>
+                <Box className="sizes-and-stock">
+                    <Typography htmlFor="size-select" >Choose a size:</Typography>
                     <select id="size-select" value={selectedSize} onChange={e => setSelectedSize(e.target.value)}>
                         {shoe.product_sizes.map(sizeInfo => (
                             <option 
@@ -49,11 +49,11 @@ export const ShoeModal = ({ shoe, onClose, onAddToCart }) => {
                             </option>
                         ))}
                     </select>
-                </div>
-                <p className="shoe-colors">Colors: {shoe.product_colors.join(', ')}</p>
-                <p className="shoe-description">{shoe.product_description}</p>
+                </Box>
+                <Typography mt={2} className="shoe-colors">Colors: {shoe.product_colors.join(', ')}</Typography>
+                <Typography mt={2} mb={2} className="shoe-description">{shoe.product_description}</Typography>
                 <Button variant="contained" color="success" onClick={handleAddToCart}>Add to cart</Button>
-            </div>
-        </div>
+            </Box>
+        </Box>
     );
 };

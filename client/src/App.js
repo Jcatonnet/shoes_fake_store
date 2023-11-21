@@ -9,7 +9,7 @@ import { Signinform } from './components/Signinform';
 import { useEffect } from 'react';
 import { loginUser, getUserProfile, updateUserProfile } from './services/userService';
 import { UserProfileModal } from './components/UserProfileModal';
-import { Button, Typography,Container, Toolbar, AppBar, Box} from '@mui/material';
+import { Button, Typography, Toolbar, AppBar, Box} from '@mui/material';
 
 const App = () => {
   const [selectedShoe, setSelectedShoe] = useState(null);
@@ -129,7 +129,7 @@ const handleCloseModal = () => {
 };
 
     return (
-        <div className="App">
+        <Box className="App">
             <AppBar sx={{ backgroundColor: '#282c34', position: "static", zIndex: "100" }}  >
                 <Toolbar>
                     <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
@@ -143,7 +143,7 @@ const handleCloseModal = () => {
             </AppBar>
             <main>
                 {!isAuthenticated ? 
-                <div className='signin-form'>     
+                <Box className='signin-form'>     
                     <Signinform 
                         open={!isAuthenticated} 
                         handleLogin={handleLogin} 
@@ -153,7 +153,7 @@ const handleCloseModal = () => {
                         handleClose={handleCloseSignup}
                         handleLogin={handleLogin}
                     />
-                </div>
+                </Box>
                     :
                     <>
                         <ShoeGrid onShoeClick={handleShoeClick} onAddToCart={handleAddToCart} />
@@ -179,7 +179,7 @@ const handleCloseModal = () => {
             <footer className="App-footer">
                 <p>Julien test ! Thanks team !</p>
             </footer>
-            </div>
+        </Box>
     );
 };
 

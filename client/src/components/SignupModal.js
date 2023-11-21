@@ -6,7 +6,6 @@ const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
-    mt: 10,
     transform: 'translate(-50%, -50%)',
     width: 400,
     bgcolor: 'background.paper',
