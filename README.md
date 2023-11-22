@@ -41,6 +41,7 @@ Build a muluti-page app, to have a cleaner structure and data management through
 More complex authentication, with loggouts and sessions storage for the Cart.
 Enhance the security, with more env variables and authorization for APIs.
 Frontend cleaning, with a theme for a neat UI
+Add form error handling and helper texts
 More complex data model, saving transactions information after each purchase
 
 **How to start:**
