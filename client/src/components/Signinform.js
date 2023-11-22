@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box, TextField, Button, Typography } from '@mui/material';
 
-export const Signinform = ({ handleClose, handleLogin, handleOpenSignup }) => {
+export const Signinform = ({ handleLogin, handleOpenSignup }) => {
     const [loginData, setLoginData] = useState({
         user_email: '',
         user_password: ''
@@ -14,7 +14,6 @@ export const Signinform = ({ handleClose, handleLogin, handleOpenSignup }) => {
     const handleSubmit = async () => {
         try {
             await handleLogin(loginData);
-            handleClose();
         } catch (error) {
             console.error('Login error:', error);
         }

@@ -24,11 +24,14 @@ export const UserProfileModal = ({ isOpen, onClose, onSave, initialUserData }) =
     const userId = decodedToken.userId; 
 
     useEffect(() => {
-        if (isOpen) {
-            setUserData(initialUserData);
-            fetchUserInventory(userId, setInventory)
-        }
-    }, [isOpen, initialUserData]);
+        const fetchData = async () => {
+            if (isOpen) {
+                setUserData(initialUserData);
+                fetchUserInventory(userId, setInventory);
+            }
+        };
+        fetchData();
+    }, [isOpen, userId]);
 
     const handleChange = (event) => {
         setUserData({ ...userData, [event.target.name]: event.target.value });
@@ -38,7 +41,9 @@ export const UserProfileModal = ({ isOpen, onClose, onSave, initialUserData }) =
         <Modal open={isOpen} onClose={onClose}>
             <Box sx={style}>
             <button className="close-button" onClick={onClose}>X</button>
-            <Typography variant="h6">Your profile</Typography>
+            <Box display="flex" justifyContent="center">
+                <Typography variant="h6">Your Profile</Typography>
+            </Box>
                     <TextField
                         name="user_name"
                         label="Name"

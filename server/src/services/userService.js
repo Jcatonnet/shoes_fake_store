@@ -23,7 +23,7 @@ export const createUser = async (userData) => {
 };
 
 export const generateToken = (userId) => {
-    return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: '48h' });
 };
 
 export const validateUser = async (email, password) => {
