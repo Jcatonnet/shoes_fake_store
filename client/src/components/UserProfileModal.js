@@ -19,7 +19,6 @@ export const UserProfileModal = ({ isOpen, onClose, onSave, initialUserData }) =
     const [userData, setUserData] = useState(initialUserData);
     const [inventory, setInventory] = useState([]);
 
-    console.log(inventory)
     const token = localStorage.getItem('token');
     const decodedToken = jwtDecode(token);
     const userId = decodedToken.userId; 
@@ -39,6 +38,7 @@ export const UserProfileModal = ({ isOpen, onClose, onSave, initialUserData }) =
         <Modal open={isOpen} onClose={onClose}>
             <Box sx={style}>
             <button className="close-button" onClick={onClose}>X</button>
+            <Typography variant="h6">Your profile</Typography>
                     <TextField
                         name="user_name"
                         label="Name"

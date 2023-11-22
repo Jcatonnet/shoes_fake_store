@@ -136,7 +136,6 @@ const handlePay = async () => {
             productSizeId: item.id,
             quantity: item.quantitySold
         }));
-        console.log("reached here")
 
         await addUserInventoryItems(userId, inventoryItems);
         setCartItems([]);
@@ -171,7 +170,7 @@ const handleCloseModal = () => {
             <AppBar sx={{ backgroundColor: '#282c34', position: "static", zIndex: "100" }}  >
                 <Toolbar>
                     <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
-                        Amazing shoe store
+                       Find your favorite red shoes here !
                     </Typography>
                     <Box>
                         {isAuthenticated && <Button color="inherit" onClick={handleOpenCart}>Cart</Button>}
